@@ -63,4 +63,12 @@ function addLaptopsToList(laptops){
         laptopElement.appendChild(document.createTextNode(laptop.title));
         laptopsElement.appendChild(laptopElement);
     }
+    priceElement.innerText = laptops[0].price;
 }
+function handleLaptopListChange(e){
+    const selectedLaptop = laptops[e.target.selectedIndex];
+    priceElement.innerText = selectedLaptop.price;
+}
+ 
+
+laptopsElement.addEventListener("change", handleLaptopListChange);
