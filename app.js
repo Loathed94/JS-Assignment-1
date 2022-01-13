@@ -52,6 +52,8 @@ const getALoanElement = document.getElementById("getLoan");
 const workElement = document.getElementById("work");
 const payOffLoanElement = document.getElementById("payOff");
 const putPayInBankElement = document.getElementById("putPayInBank");
+const payOffLoanWithPayElement = document.getElementById("payOffLoanWithPay");
+const balanceElement = document.getElementById("balance").innerText = Bank.balance;
 
 let laptops = [];
 fetch("https://noroff-komputer-store-api.herokuapp.com/computers").then(response => response.json()).then(data => laptops = data).then(laptops => addLaptopsToList(laptops));
@@ -72,3 +74,7 @@ function handleLaptopListChange(e){
  
 
 laptopsElement.addEventListener("change", handleLaptopListChange);
+workElement.addEventListener("click", Work.doTheWork);
+payOffLoanElement.addEventListener("click", Bank.payOffLoanWithBalance);
+putPayInBankElement.addEventListener("click", Work.putPayInBank);
+payOffLoanWithPayElement.addEventListener("click", Work.payOffLoanWithPay);
