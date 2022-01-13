@@ -1,8 +1,18 @@
 let Bank = {
     balance: 0,
     loan: 0,
+    getALoan(){
+        if(loan != 0){
+            return;
+        }
+        const loanAmount = prompt("How much money do you need to loan from the bank?");
+        if(this.isLoanAmountAcceptable(loanAmount)){
+            this.balance += parseInt(loanAmount);
+            this.loan = loanAmount;
+        }
+    },
     isLoanAmountAcceptable(amount){
-        if(amount > 2*this.balance){
+        if(parseInt(amount) > 2*this.balance){
             return false;
         }
         return true;
@@ -54,6 +64,7 @@ const payOffLoanElement = document.getElementById("payOff");
 const putPayInBankElement = document.getElementById("putPayInBank");
 const payOffLoanWithPayElement = document.getElementById("payOffLoanWithPay");
 const balanceElement = document.getElementById("balance").innerText = Bank.balance;
+const loanElement = document.getElementById("loan").innerText = Bank.loan;
 
 let laptops = [];
 fetch("https://noroff-komputer-store-api.herokuapp.com/computers").then(response => response.json()).then(data => laptops = data).then(laptops => addLaptopsToList(laptops));
@@ -78,3 +89,4 @@ workElement.addEventListener("click", Work.doTheWork);
 payOffLoanElement.addEventListener("click", Bank.payOffLoanWithBalance);
 putPayInBankElement.addEventListener("click", Work.putPayInBank);
 payOffLoanWithPayElement.addEventListener("click", Work.payOffLoanWithPay);
+getALoanElement.addEventListener("click", Bank.getALoan);
