@@ -46,3 +46,13 @@ let Work = {
         this.pay = 0;
     }
 }
+const laptopsElement = document.getElementById("laptops");
+const priceElement = document.getElementById("price");
+const getALoanElement = document.getElementById("getLoan");
+const workElement = document.getElementById("work");
+const payOffLoanElement = document.getElementById("payOff");
+const putPayInBankElement = document.getElementById("putPayInBank");
+
+let laptops = [];
+fetch("https://noroff-komputer-store-api.herokuapp.com/computers").then(response => response.json()).then(data => laptops = data).then(laptops => addLaptopsToList(laptops));
+
