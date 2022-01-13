@@ -1,6 +1,5 @@
 let Bank = {
     balance: 0,
-    hasLoan: false,
     loan: 0,
     isLoanAmountAcceptable(amount){
         if(amount > 2*this.balance){
@@ -8,7 +7,8 @@ let Bank = {
         }
         return true;
     },
-    payOffLoan(){
+    payOffLoanWithBalance(){
+        if(loan>0){return}
         if(balance >= loan){
             this.balance -= this.loan;
             this.loan = 0;
@@ -17,8 +17,28 @@ let Bank = {
             this.loan -= this.balance;
             this.balance = 0;
         }
+    },
+    payOffLoanPartiallyWithPay(amount){
+        if(amount > this.loan){
+            let residual = amount - this.loan;
+            this.loan = 0;
+            this.balance += residual;
+        }
+        else{
+            this.loan -= amount;
+        }
     }
 }
 let Work = {
-    pay: 0
+    pay: 0,
+    doTheWork(){
+        this.pay += 100;
+    },
+    putPayInBank(){
+        if(Bank.loan > 0){
+            Bank.payOffLoanPartiallyWithPay(0.1*this.pay);
+            Bank.balance += 0.9*this.pay;
+            this.pay = 0;
+        }
+    }
 }
