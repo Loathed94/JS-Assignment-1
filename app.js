@@ -18,7 +18,7 @@ let Bank = {
             this.balance = 0;
         }
     },
-    payOffLoanPartiallyWithPay(amount){
+    payOffLoanFromOutside(amount){
         if(amount > this.loan){
             let residual = amount - this.loan;
             this.loan = 0;
@@ -40,5 +40,9 @@ let Work = {
             Bank.balance += 0.9*this.pay;
             this.pay = 0;
         }
+    },
+    payOffLoanWithPay(){
+        Bank.payOffLoanFromOutside(this.pay);
+        this.pay = 0;
     }
 }
