@@ -56,3 +56,11 @@ const putPayInBankElement = document.getElementById("putPayInBank");
 let laptops = [];
 fetch("https://noroff-komputer-store-api.herokuapp.com/computers").then(response => response.json()).then(data => laptops = data).then(laptops => addLaptopsToList(laptops));
 
+function addLaptopsToList(laptops){
+    for (const laptop of laptops) {
+        const laptopElement = document.createElement("option");
+        laptopElement.value = laptop.id;
+        laptopElement.appendChild(document.createTextNode(laptop.title));
+        laptopsElement.appendChild(laptopElement);
+    }
+}
