@@ -1,10 +1,14 @@
-let Bank = {
+const Bank = {
     balance: 0,
     loan: 0,
-    getALoan(){
-        if(loan != 0){
+    getALoan: function(){
+        console.log("Test");
+        console.log(this.loan)
+        if(this.loan > 0){
+            console.log("if")
             return;
         }
+        console.log("Test2")
         const loanAmount = prompt("How much money do you need to loan from the bank?");
         if(this.isLoanAmountAcceptable(loanAmount)){
             this.balance += parseInt(loanAmount);
@@ -38,24 +42,27 @@ let Bank = {
             this.loan -= amount;
         }
     }
-}
+};
 let Work = {
     pay: 0,
-    doTheWork(){
+    doTheWork: function(){
+        console.log(this.pay);
         this.pay += 100;
+        console.log(this.pay);
+        const newPayElement = document.getElementById("pay").innerText = this.pay;
     },
-    putPayInBank(){
+    putPayInBank: function(){
         if(Bank.loan > 0){
             Bank.payOffLoanPartiallyWithPay(0.1*this.pay);
             Bank.balance += 0.9*this.pay;
             this.pay = 0;
         }
     },
-    payOffLoanWithPay(){
+    payOffLoanWithPay: function(){
         Bank.payOffLoanFromOutside(this.pay);
         this.pay = 0;
     }
-}
+};
 const laptopsElement = document.getElementById("laptops");
 const priceElement = document.getElementById("price");
 const getALoanElement = document.getElementById("getLoan");
@@ -65,6 +72,7 @@ const putPayInBankElement = document.getElementById("putPayInBank");
 const payOffLoanWithPayElement = document.getElementById("payOffLoanWithPay");
 const balanceElement = document.getElementById("balance").innerText = Bank.balance;
 const loanElement = document.getElementById("loan").innerText = Bank.loan;
+const payElement = document.getElementById("pay").innerText = Work.pay;
 
 let laptops = [];
 fetch("https://noroff-komputer-store-api.herokuapp.com/computers").then(response => response.json()).then(data => laptops = data).then(laptops => addLaptopsToList(laptops));
@@ -85,8 +93,8 @@ function handleLaptopListChange(e){
  
 
 laptopsElement.addEventListener("change", handleLaptopListChange);
-workElement.addEventListener("click", Work.doTheWork);
-payOffLoanElement.addEventListener("click", Bank.payOffLoanWithBalance);
-putPayInBankElement.addEventListener("click", Work.putPayInBank);
-payOffLoanWithPayElement.addEventListener("click", Work.payOffLoanWithPay);
-getALoanElement.addEventListener("click", Bank.getALoan);
+workElement.addEventListener("click", Work.doTheWork.bind(Work));
+//payOffLoanElement.addEventListener("click", Bank.payOffLoanWithBalance);
+putPayInBankElement.addEventListener("click", Work.putPayInBank.bind(Work));
+//payOffLoanWithPayElement.addEventListener("click", Work.payOffLoanWithPay);
+getALoanElement.addEventListener("click", Bank.getALoan.bind(Bank));
