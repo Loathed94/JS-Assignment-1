@@ -11,7 +11,7 @@ const Bank = {
         }
         if(this.isLoanAmountAcceptable(loanAmount)){
             this.balance += parseInt(loanAmount);
-            this.loan = loanAmount;
+            this.loan = parseInt(loanAmount);
         }
         updateElements();
     },
@@ -73,14 +73,24 @@ function updateElements(){
     payElement = document.getElementById("pay").innerText = Work.pay;
     loanElement = document.getElementById("loan").innerText = Bank.loan;
     balanceElement = document.getElementById("balance").innerText = Bank.balance;
+    if(Bank.loan > 0){
+        payOffLoanElement.style.display = "block";
+        payOffLoanWithPayElement.style.display = "block";
+    }
+    else{
+        payOffLoanElement.style.display = "none";
+        payOffLoanWithPayElement.style.display = "none";
+    }
 };
 const laptopsElement = document.getElementById("laptops");
 const priceElement = document.getElementById("price");
 const getALoanElement = document.getElementById("getLoan");
 const workElement = document.getElementById("work");
 const payOffLoanElement = document.getElementById("payOff");
+payOffLoanElement.style.display ="none";
 const putPayInBankElement = document.getElementById("putPayInBank");
 const payOffLoanWithPayElement = document.getElementById("payOffLoanWithPay");
+payOffLoanWithPayElement.style.display = "none";
 let balanceElement = document.getElementById("balance").innerText = Bank.balance;
 let loanElement = document.getElementById("loan").innerText = Bank.loan;
 let payElement = document.getElementById("pay").innerText = Work.pay;
@@ -109,3 +119,4 @@ workElement.addEventListener("click", Work.doTheWork.bind(Work));
 putPayInBankElement.addEventListener("click", Work.putPayInBank.bind(Work));
 //payOffLoanWithPayElement.addEventListener("click", Work.payOffLoanWithPay);
 getALoanElement.addEventListener("click", Bank.getALoan.bind(Bank));
+payOffLoanWithPayElement.addEventListener("click", Work.payOffLoanWithPay.bind(Work));
