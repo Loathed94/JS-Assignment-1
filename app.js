@@ -84,6 +84,8 @@ function updateElements(){
 };
 const laptopsElement = document.getElementById("laptops");
 const priceElement = document.getElementById("price");
+const specsElement = document.getElementById("specs");
+const descriptionElement = document.getElementById("description");
 const getALoanElement = document.getElementById("getLoan");
 const workElement = document.getElementById("work");
 const payOffLoanElement = document.getElementById("payOff");
@@ -91,9 +93,12 @@ payOffLoanElement.style.display ="none";
 const putPayInBankElement = document.getElementById("putPayInBank");
 const payOffLoanWithPayElement = document.getElementById("payOffLoanWithPay");
 payOffLoanWithPayElement.style.display = "none";
-let balanceElement = document.getElementById("balance").innerText = Bank.balance;
-let loanElement = document.getElementById("loan").innerText = Bank.loan;
-let payElement = document.getElementById("pay").innerText = Work.pay;
+const balanceElement = document.getElementById("balance");
+balanceElement.innerText = Bank.balance;
+const loanElement = document.getElementById("loan");
+loanElement.innerText = Bank.loan;
+const payElement = document.getElementById("pay");
+payElement.innerText = Work.pay;
 
 let laptops = [];
 fetch("https://noroff-komputer-store-api.herokuapp.com/computers").then(response => response.json()).then(data => laptops = data).then(laptops => addLaptopsToList(laptops));
@@ -106,10 +111,19 @@ function addLaptopsToList(laptops){
         laptopsElement.appendChild(laptopElement);
     }
     priceElement.innerText = laptops[0].price;
+    descriptionElement.innerText = laptops[0].description;
 }
 function handleLaptopListChange(e){
     const selectedLaptop = laptops[e.target.selectedIndex];
     priceElement.innerText = selectedLaptop.price;
+    descriptionElement.innerText = selectedLaptop.description;
+    const specArray = selectedLaptop.specs;
+    specArray.forEach(addSpecToHTML(spec));
+}
+function addSpecToHTML(spec){
+    let currentSpec = document.createElement("li");
+    currentSpec.innerText = spec; //??
+    specsElement.appendChild(currentSpec);
 }
  
 
