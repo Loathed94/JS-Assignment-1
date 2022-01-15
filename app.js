@@ -22,8 +22,7 @@ const Bank = {
         return true;
     },
     payOffLoanWithBalance(){
-        if(loan>0){return}
-        if(balance >= loan){
+        if(this.balance >= this.loan){
             this.balance -= this.loan;
             this.loan = 0;
         }
@@ -45,7 +44,7 @@ const Bank = {
         updateElements();
     }
 };
-let Work = {
+const Work = {
     pay: 0,
     doTheWork: function(){
         this.pay += 100;
@@ -69,10 +68,17 @@ let Work = {
         updateElements();
     }
 };
+function buy(){
+    const price = parseInt(priceElement.innerText);
+    if(price <= Bank.balance){
+        Bank.balance -= price;
+    }
+    updateElements();
+}
 function updateElements(){
-    payElement = document.getElementById("pay").innerText = Work.pay;
-    loanElement = document.getElementById("loan").innerText = Bank.loan;
-    balanceElement = document.getElementById("balance").innerText = Bank.balance;
+    payElement.innerText = Work.pay;
+    loanElement.innerText = Bank.loan;
+    balanceElement.innerText = Bank.balance;
     if(Bank.loan > 0){
         payOffLoanElement.style.display = "block";
         payOffLoanWithPayElement.style.display = "block";
@@ -99,6 +105,8 @@ const loanElement = document.getElementById("loan");
 loanElement.innerText = Bank.loan;
 const payElement = document.getElementById("pay");
 payElement.innerText = Work.pay;
+const buyElement = document.getElementById("buy");
+let currentSpecs = [];
 
 let laptops = [];
 fetch("https://noroff-komputer-store-api.herokuapp.com/computers").then(response => response.json()).then(data => laptops = data).then(laptops => addLaptopsToList(laptops));
@@ -112,25 +120,35 @@ function addLaptopsToList(laptops){
     }
     priceElement.innerText = laptops[0].price;
     descriptionElement.innerText = laptops[0].description;
+    for (const spec of laptops[0].specs) {
+        addSpecToHTML(spec);
+    }
 }
 function handleLaptopListChange(e){
     const selectedLaptop = laptops[e.target.selectedIndex];
     priceElement.innerText = selectedLaptop.price;
     descriptionElement.innerText = selectedLaptop.description;
+    for (const child of currentSpecs) {
+        specsElement.removeChild(child);
+    }
+    currentSpecs = [];
     const specArray = selectedLaptop.specs;
-    specArray.forEach(addSpecToHTML(spec));
+    for (const spec of specArray) {
+        addSpecToHTML(spec);
+    }
 }
 function addSpecToHTML(spec){
-    let currentSpec = document.createElement("li");
+    const currentSpec = document.createElement("li");
     currentSpec.innerText = spec; //??
+    currentSpecs.push(currentSpec);
     specsElement.appendChild(currentSpec);
 }
  
 
 laptopsElement.addEventListener("change", handleLaptopListChange);
 workElement.addEventListener("click", Work.doTheWork.bind(Work));
-//payOffLoanElement.addEventListener("click", Bank.payOffLoanWithBalance);
+payOffLoanElement.addEventListener("click", Bank.payOffLoanWithBalance.bind(Bank));
 putPayInBankElement.addEventListener("click", Work.putPayInBank.bind(Work));
-//payOffLoanWithPayElement.addEventListener("click", Work.payOffLoanWithPay);
 getALoanElement.addEventListener("click", Bank.getALoan.bind(Bank));
 payOffLoanWithPayElement.addEventListener("click", Work.payOffLoanWithPay.bind(Work));
+buyElement.addEventListener("click", buy);
