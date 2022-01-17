@@ -77,21 +77,24 @@ function buy(){ //A function that allows the user to buy a laptop of their choic
 }
 function updateElements(){ //Any time a user performs an action that can change what is displayed on the webpage this function makes sure to keep the html updated.
     payElement.innerText = Work.pay;
-    loanElement.innerText = Bank.loan; //Update numbers
+    loanElement.innerText = "Loan: "+Bank.loan; //Update numbers
     balanceElement.innerText = Bank.balance;
     if(Bank.loan > 0){ //Hide or unhide buttons
         payOffLoanElement.style.display = "block";
         payOffLoanWithPayElement.style.display = "block";
+        loanElement.style.display = "block";
     }
     else{
         payOffLoanElement.style.display = "none";
         payOffLoanWithPayElement.style.display = "none";
+        loanElement.style.display = "none";
     }
 };
 const baseURL = "https://noroff-komputer-store-api.herokuapp.com/";
 const completeAPIURL = baseURL+"computers";
 const laptopsElement = document.getElementById("laptops");
 const priceElement = document.getElementById("price");
+const price2Element = document.getElementById("price2");
 const specsElement = document.getElementById("specs");
 const descriptionElement = document.getElementById("description"); //A bunch of elements corresponding to items in the html.
 const getALoanElement = document.getElementById("getLoan");
@@ -104,11 +107,13 @@ payOffLoanWithPayElement.style.display = "none";
 const balanceElement = document.getElementById("balance");
 balanceElement.innerText = Bank.balance;
 const loanElement = document.getElementById("loan");
-loanElement.innerText = Bank.loan; //Default values printed.
+loanElement.innerText = "Loan: "+Bank.loan; //Default values printed.
+loanElement.style.display = "none";
 const payElement = document.getElementById("pay");
 payElement.innerText = Work.pay;
 const buyElement = document.getElementById("buy");
 const imageElement = document.getElementById("image");
+const titleElement = document.getElementById("title");
 let currentSpecs = []; //An array storing specs currently displayed in the html. Used to keep track of which specs are used before new ones take over to make it easier for the program to remove old childNode-specs.
 //const images = [];
 
@@ -125,19 +130,19 @@ function addLaptopsToList(laptops){ //Laptops are sent to this function.
         laptopElement.appendChild(document.createTextNode(laptop.title)); //Name of laptop added to element as a childNode.
         laptopsElement.appendChild(laptopElement); //laptop element added to greater element of all laptops (notice slight difference in name)
     }
-    priceElement.innerText = laptops[0].price; 
+    priceElement.innerText = laptops[0].price;
+    price2Element.innerText = laptops[0].price; 
     descriptionElement.innerText = laptops[0].description; //Default price and description added to html at start.
     for (const spec of laptops[0].specs) { //Same thing for specs, but as unspecified amount of list items
         addSpecToHTML(spec);
     }
-    //const img = document.createElement("img");
-    //img.src = baseURL + laptops[0].image;
     imageElement.src = baseURL + laptops[0].image;
-    //imageElement.appendChild(img);
+    titleElement.innerText = laptops[0].title;
 }
 function handleLaptopListChange(e){ //When a laptop is selected on the webpage it is updated with new laptop information.
     const selectedLaptop = laptops[e.target.selectedIndex]; //Event shows which laptop was selected.
     priceElement.innerText = selectedLaptop.price; //Price and description is changed to that of new laptop.
+    price2Element.innerText = selectedLaptop.price;
     descriptionElement.innerText = selectedLaptop.description;
     for (const child of currentSpecs) { //Old specifications from previous laptop that were added as children are removed.
         specsElement.removeChild(child);
@@ -147,7 +152,8 @@ function handleLaptopListChange(e){ //When a laptop is selected on the webpage i
     for (const spec of specArray) { //New specs looped over.
         addSpecToHTML(spec);
     }
-    if(e.target.selectedIndex === 4){
+    titleElement.innerText = selectedLaptop.title;
+    if(e.target.selectedIndex === 4){ //Fixing Noroff's mistakes ;)
         let imgURL = baseURL + selectedLaptop.image;
         imgURL = imgURL.substring(0, imgURL.length-3)+"png";
         imageElement.src = imgURL;

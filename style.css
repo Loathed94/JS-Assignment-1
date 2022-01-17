@@ -2,3 +2,27 @@
     height: auto;
     width: 200px;
 }
+#outerImg{
+    display: flex;
+    align-items: top;
+}
+#innerImg{
+    padding-left: 20px;
+    max-width: 16rem;
+}
+#buyArea{
+    padding-left: 30px;
+}
+#topArea{
+    display: flex;
+    align-items: top;
+}
+#workArea{
+    padding-left: 40px;
+}
+#laptopArea{
+    padding-left: 40px;
+}
+#specs{
+    font-size: 10px;
+}
