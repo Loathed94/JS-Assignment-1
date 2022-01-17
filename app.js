@@ -72,6 +72,10 @@ function buy(){ //A function that allows the user to buy a laptop of their choic
     const price = parseInt(priceElement.innerText);
     if(price <= Bank.balance){ //...assuming they can afford it.
         Bank.balance -= price;
+        alert("You are now the proud owner of a brand new "+titleElement.innerText);
+    }
+    else{
+        alert("You cannot afford that! Git gud.")
     }
     updateElements();
 }
