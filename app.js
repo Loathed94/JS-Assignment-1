@@ -88,6 +88,8 @@ function updateElements(){ //Any time a user performs an action that can change 
         payOffLoanWithPayElement.style.display = "none";
     }
 };
+const baseURL = "https://noroff-komputer-store-api.herokuapp.com/";
+const completeAPIURL = baseURL+"computers";
 const laptopsElement = document.getElementById("laptops");
 const priceElement = document.getElementById("price");
 const specsElement = document.getElementById("specs");
@@ -106,10 +108,12 @@ loanElement.innerText = Bank.loan; //Default values printed.
 const payElement = document.getElementById("pay");
 payElement.innerText = Work.pay;
 const buyElement = document.getElementById("buy");
+const imageElement = document.getElementById("image");
 let currentSpecs = []; //An array storing specs currently displayed in the html. Used to keep track of which specs are used before new ones take over to make it easier for the program to remove old childNode-specs.
+//const images = [];
 
 let laptops = []; //The array storing the laptop-objects from the .json fetch.
-fetch("https://noroff-komputer-store-api.herokuapp.com/computers") //Fetch the API-promise.
+fetch(completeAPIURL) //Fetch the API-promise.
 .then(response => response.json()) //Extract .json from Promise
 .then(data => laptops = data) //Store data from .json in laptops array.
 .then(laptops => addLaptopsToList(laptops)); //Send laptops array to a function shown below.
@@ -126,6 +130,10 @@ function addLaptopsToList(laptops){ //Laptops are sent to this function.
     for (const spec of laptops[0].specs) { //Same thing for specs, but as unspecified amount of list items
         addSpecToHTML(spec);
     }
+    //const img = document.createElement("img");
+    //img.src = baseURL + laptops[0].image;
+    imageElement.src = baseURL + laptops[0].image;
+    //imageElement.appendChild(img);
 }
 function handleLaptopListChange(e){ //When a laptop is selected on the webpage it is updated with new laptop information.
     const selectedLaptop = laptops[e.target.selectedIndex]; //Event shows which laptop was selected.
@@ -138,6 +146,14 @@ function handleLaptopListChange(e){ //When a laptop is selected on the webpage i
     const specArray = selectedLaptop.specs; //New specs found.
     for (const spec of specArray) { //New specs looped over.
         addSpecToHTML(spec);
+    }
+    if(e.target.selectedIndex === 4){
+        let imgURL = baseURL + selectedLaptop.image;
+        imgURL = imgURL.substring(0, imgURL.length-3)+"png";
+        imageElement.src = imgURL;
+    }
+    else{
+        imageElement.src = baseURL + selectedLaptop.image;
     }
 }
 function addSpecToHTML(spec){ //Whenever specs are added to html it is done here.
