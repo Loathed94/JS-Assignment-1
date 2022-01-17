@@ -21,7 +21,7 @@ const Bank = { //Object representing the bank with member attributes and methods
         }
         return true;
     },
-    payOffLoanWithBalance(){ //Method uses balance in bank to pay off loans. 
+    payOffLoanWithBalance(){ //Method uses balance in bank to pay off loans. I first thought this was a button/function requested, but since it wasn't it'll be a little bonus feature.
         if(this.balance >= this.loan){ //If balance is greater than debt the debt is zero'd and balance is reduced by debt size.
             this.balance -= this.loan;
             this.loan = 0;
@@ -50,7 +50,7 @@ const Work = { //An object representing the workplace with its members.
         this.pay += 100;
         updateElements();
     },
-    putPayInBank: function(){ //Puts money in pay into the bank.
+    putPayInBank: function(){ //Puts money from pay into the bank.
         if(Bank.loan > 0){ //If worker is in debt 10% goes to clearing the debt, 90% goes to balance.
             Bank.payOffLoanFromOutside(0.1*this.pay);
             Bank.balance += 0.9*this.pay;
@@ -119,7 +119,6 @@ const buyElement = document.getElementById("buy");
 const imageElement = document.getElementById("image");
 const titleElement = document.getElementById("title");
 let currentSpecs = []; //An array storing specs currently displayed in the html. Used to keep track of which specs are used before new ones take over to make it easier for the program to remove old childNode-specs.
-//const images = [];
 
 let laptops = []; //The array storing the laptop-objects from the .json fetch.
 fetch(completeAPIURL) //Fetch the API-promise.
