@@ -1,22 +1,15 @@
-const Bank = {
-  //Object representing the bank with member attributes and methods.
+const Bank = { //Object representing the bank with member attributes and methods.
   balance: 0, //Customer's balance.
   loan: 0, //Debt, money borrowed goes into balance, this shows debt.
-  getALoan: function () {
-    //The method called when user wishes to get a loan.
-    if (this.loan > 0) {
-      //If user has debt no new loan is allowed, so method returns without doing anything.
+  getALoan: function () { //The method called when user wishes to get a loan.
+    if (this.loan > 0) { //If user has debt no new loan is allowed, so method returns without doing anything.
       return;
     }
-    const loanAmount = prompt(
-      "How much money do you need to loan from the bank?"
-    ); //Asks user to input how much they wish to borrow.
-    if (loanAmount === NaN) {
-      //If input is cancelled the method returns without doing any more work.
+    const loanAmount = prompt("How much money do you need to loan from the bank?"); //Asks user to input how much they wish to borrow.
+    if (loanAmount === null) { //If input is cancelled the method returns without doing any more work.
       return;
     }
-    if (this.isLoanAmountAcceptable(loanAmount)) {
-      //A different method is called that makes sure the loan amount is not too much.
+    if (this.isLoanAmountAcceptable(loanAmount)) { //A different method is called that makes sure the loan amount is not too much.
       this.balance += parseInt(loanAmount); //If loan amount is acceptable then the loan is granted.
       this.loan = parseInt(loanAmount);
     }
@@ -200,14 +193,8 @@ function addSpecToHTML(spec) {
 
 laptopsElement.addEventListener("change", handleLaptopListChange); //Listener that notices change of selected laptop and fires relevant function.
 workElement.addEventListener("click", Work.doTheWork.bind(Work)); //Listener that notices Work-button click and fires relevant method.
-payOffLoanElement.addEventListener(
-  "click",
-  Bank.payOffLoanWithBalance.bind(Bank)
-); //Listener that notices Pay-off-loan-button click and fires relevant method.
+payOffLoanElement.addEventListener("click", Bank.payOffLoanWithBalance.bind(Bank)); //Listener that notices Pay-off-loan-button click and fires relevant method.
 putPayInBankElement.addEventListener("click", Work.putPayInBank.bind(Work)); //Listener that notices Deposit-pay-button click and fires relevant method.
 getALoanElement.addEventListener("click", Bank.getALoan.bind(Bank)); //Listener that notices Get-a-loan-button click and fires relevant method.
-payOffLoanWithPayElement.addEventListener(
-  "click",
-  Work.payOffLoanWithPay.bind(Work)
-); //Listener that notices pay-off-loan-with-pay-button click and fires relevant method.
+payOffLoanWithPayElement.addEventListener("click", Work.payOffLoanWithPay.bind(Work)); //Listener that notices pay-off-loan-with-pay-button click and fires relevant method.
 buyElement.addEventListener("click", buy); //Listener that notices Buy-button click and fires relevant function.
