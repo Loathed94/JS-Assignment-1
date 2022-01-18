@@ -7,7 +7,7 @@ A browser to display html file on is sufficient.
 
 # Usage
 Open index.html on a browser of your choice.
-
+Alternatively view it hosted on GitHub Pages: https://loathed94.github.io/JS-Assignment-1/
 # Authors
 Code written and owned by Christian Neij. 
 
