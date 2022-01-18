@@ -15,28 +15,23 @@ const Bank = { //Object representing the bank with member attributes and methods
     }
     updateElements(); //HTML is updated when numbers are changed.
   },
-  isLoanAmountAcceptable(amount) {
-    //Method checks if loan amount are acceptable.
+  isLoanAmountAcceptable(amount) { //Method checks if loan amount are acceptable.
     if (parseInt(amount) > 2 * this.balance) {
       return false;
     }
     return true;
   },
-  payOffLoanWithBalance() {
-    //Method uses balance in bank to pay off loans. I first thought this was a button/function requested, but since it wasn't it'll be a little bonus feature.
-    if (this.balance >= this.loan) {
-      //If balance is greater than debt the debt is zero'd and balance is reduced by debt size.
+  payOffLoanWithBalance() { //Method uses balance in bank to pay off loans. I first thought this was a button/function requested, but since it wasn't it'll be a little bonus feature.
+    if (this.balance >= this.loan) { //If balance is greater than debt the debt is zero'd and balance is reduced by debt size.
       this.balance -= this.loan;
       this.loan = 0;
-    } else {
-      //If balance is smaller than debt then balance is zero'd and debt is decreased by balance size.
+    } else { //If balance is smaller than debt then balance is zero'd and debt is decreased by balance size.
       this.loan -= this.balance;
       this.balance = 0;
     }
     updateElements();
   },
-  payOffLoanFromOutside(amount) {
-    //Similar to method above but allows un-specified amounts of cash from outside to pay off (entirely or partially) the debt.
+  payOffLoanFromOutside(amount) { //Similar to method above but allows un-specified amounts of cash from outside to pay off (entirely or partially) the debt.
     if (amount > this.loan) {
       let residual = amount - this.loan;
       this.loan = 0;
@@ -90,13 +85,11 @@ function buy() {
   }
   updateElements();
 }
-function updateElements() {
-  //Any time a user performs an action that can change what is displayed on the webpage this function makes sure to keep the html updated.
+function updateElements() { //Any time a user performs an action that can change what is displayed on the webpage this function makes sure to keep the html updated.
   payElement.innerText = Work.pay;
   loanElement.innerText = "Loan: " + Bank.loan; //Update numbers
   balanceElement.innerText = Bank.balance;
-  if (Bank.loan > 0) {
-    //Hide or unhide buttons
+  if (Bank.loan > 0) { //Hide or unhide buttons
     payOffLoanElement.style.display = "block";
     payOffLoanWithPayElement.style.display = "block";
     loanElement.style.display = "block";
@@ -138,10 +131,8 @@ fetch(completeAPIURL) //Fetch the API-promise.
   .then((data) => (laptops = data)) //Store data from .json in laptops array.
   .then((laptops) => addLaptopsToList(laptops)); //Send laptops array to a function shown below.
 
-function addLaptopsToList(laptops) {
-  //Laptops are sent to this function.
-  for (const laptop of laptops) {
-    //Laptops are looped over, selected one by one.
+function addLaptopsToList(laptops) { //Laptops are sent to this function.
+  for (const laptop of laptops) { //Laptops are looped over, selected one by one.
     const laptopElement = document.createElement("option"); //For each laptop an element is created with "option" type chosen for html-select.
     laptopElement.value = laptop.id; //value of element set to laptop's unique id.
     laptopElement.appendChild(document.createTextNode(laptop.title)); //Name of laptop added to element as a childNode.
@@ -150,32 +141,27 @@ function addLaptopsToList(laptops) {
   priceElement.innerText = laptops[0].price;
   price2Element.innerText = laptops[0].price;
   descriptionElement.innerText = laptops[0].description; //Default price and description added to html at start.
-  for (const spec of laptops[0].specs) {
-    //Same thing for specs, but as unspecified amount of list items
+  for (const spec of laptops[0].specs) { //Same thing for specs, but as unspecified amount of list items
     addSpecToHTML(spec);
   }
   imageElement.src = baseURL + laptops[0].image;
   titleElement.innerText = laptops[0].title;
 }
-function handleLaptopListChange(e) {
-  //When a laptop is selected on the webpage it is updated with new laptop information.
+function handleLaptopListChange(e) { //When a laptop is selected on the webpage it is updated with new laptop information.
   const selectedLaptop = laptops[e.target.selectedIndex]; //Event shows which laptop was selected.
   priceElement.innerText = selectedLaptop.price; //Price and description is changed to that of new laptop.
   price2Element.innerText = selectedLaptop.price;
   descriptionElement.innerText = selectedLaptop.description;
-  for (const child of currentSpecs) {
-    //Old specifications from previous laptop that were added as children are removed.
+  for (const child of currentSpecs) { //Old specifications from previous laptop that were added as children are removed.
     specsElement.removeChild(child);
   }
   currentSpecs = []; //CurrentSpecs is reset to empty array.
   const specArray = selectedLaptop.specs; //New specs found.
-  for (const spec of specArray) {
-    //New specs looped over.
+  for (const spec of specArray) { //New specs looped over.
     addSpecToHTML(spec);
   }
   titleElement.innerText = selectedLaptop.title;
-  if (e.target.selectedIndex === 4) {
-    //Fixing Noroff's mistakes ;)
+  if (e.target.selectedIndex === 4) { //Fixing Noroff's mistakes ;)
     let imgURL = baseURL + selectedLaptop.image;
     imgURL = imgURL.substring(0, imgURL.length - 3) + "png";
     imageElement.src = imgURL;
@@ -183,8 +169,7 @@ function handleLaptopListChange(e) {
     imageElement.src = baseURL + selectedLaptop.image;
   }
 }
-function addSpecToHTML(spec) {
-  //Whenever specs are added to html it is done here.
+function addSpecToHTML(spec) { //Whenever specs are added to html it is done here.
   const currentSpec = document.createElement("li"); //list item created.
   currentSpec.innerText = spec; //spec added as text to li.
   currentSpecs.push(currentSpec); //New spec added to list of specs.

@@ -35,3 +35,11 @@
 #payInBankDiv{
     padding-bottom: 10px;
 }
+#topNav{
+    background-color: darkslategrey;
+    margin-bottom: 2.5rem;
+}
+#navSpan{
+    font-size: 35px;
+    color: white;
+}
